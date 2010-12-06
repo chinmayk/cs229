@@ -14,6 +14,7 @@ fid = fopen(filename);
 mat=[];
 currUser=0;
 numUsers=0;
+lastUsers=0;
 while 1
     tline = fgetl(fid);
     if ~ischar(tline), break, end
@@ -25,8 +26,9 @@ while 1
     end
     if numUsers>numUsersLimit, break;end
     mat=[mat;numLine(1:3)'];
-    if mod(numUsers, 1000) == 0
-        numUsers
+    if mod(numUsers, 1000) == 0 && numUsers ~= lastUsers
+        lastUsers = numUsers;
+        fprintf('Loaded %d users\n', numUsers);
     end
 end
 userVoteMat=spconvert(mat);
@@ -53,13 +55,9 @@ case 1
 end
 return
 
-function userVoteMat=compressUserVoteMat(userVoteMat);
-% Removes extremely unseen movies (seen by < 3 users)
-% and users with few votes 
-%
-% FUNCTION userVoteMat=compressUserVoteMat(userVoteMat);
-%
-% Guy Lebanon June 2003
+function userVoteMat=compressUserVoteMat(userVoteMat)
+% Removes classes with less than 3 grades
+% and users with less than 4 classes
 
 userVoteBinary=spones(userVoteMat);
 ind=find(sum(userVoteBinary)<3);
@@ -72,4 +70,5 @@ userVoteMat(ind,:)=[];
 userVoteBinary=spones(userVoteMat);
 ind=find(sum(userVoteBinary)==0);
 userVoteMat(:,ind)=[];
+
 return 

@@ -22,6 +22,7 @@ simMat=memoryBasedModels(activeCellVecTrain,otherCellVec,simMethod,-1,numItems);
 for j=1:numActive,
     ind=find(activeMatTrain(j,:)>0);
     activeUserMean=full(mean(activeMatTrain(j,ind)));
+    
     predPref=predictPreferenceMemBased(simMat(j,:), otherMat, activeUserMean);
     ind = find(activeMatTest(j,:)>0);
     predPref = predPref(ind);

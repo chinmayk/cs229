@@ -1,4 +1,4 @@
-function predPref=predictPreferenceMemBased(simVec, usersMat, activeAvg)
+function predPref = predictPreferenceMemBased(simVec, usersMat, activeAvg)
 % Collaborative filtering predictions using memory based methods
 % in Breese et al (see equation (1) therein).
 %
