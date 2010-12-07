@@ -34,11 +34,4 @@ S.maxIter = 50;
 [sim1Err,sim2Err,PDErr,avgErr,constErr,S]=eachMovieComparison(S);
 save experiment1 sim1Err sim2Err PDErr avgErr constErr S;
 
-tp=1;
-disp([mean(sim1Err{1}(tp,:)) mean(sim2Err{1}(tp,:)) mean(avgErr{1}(tp,:)) mean(constErr{1}(tp,:)) ]);
-
-tp=2;
-disp([mean(sim1Err{1}(tp,:)) mean(sim2Err{1}(tp,:)) mean(avgErr{1}(tp,:)) mean(constErr{1}(tp,:)) ]);
-
-tp=3;
-disp([mean(sim1Err{1}(tp,:)) mean(sim2Err{1}(tp,:)) mean(avgErr{1}(tp,:)) mean(constErr{1}(tp,:)) ]);
+disp([mean(cell2mat(sim1Err)')', mean(cell2mat(sim2Err)')', mean(cell2mat(avgErr)')', mean(cell2mat(constErr)')'])

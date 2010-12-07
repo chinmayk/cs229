@@ -128,12 +128,12 @@ for i = 1:iterations
     % sprintf('PD done: %f\t%f\t%f', err1, err2, err3); 
     % PDErr{i}=[err1;err2;err3];
     
-    [err1,err2,err3]=evalAvgEachMovie(activeMatTrain,activeMatTest,...
+    [err1,err2,err3]=evalAvgGradeForUser(activeMatTrain,activeMatTest,...
         S.K,S.coeff);
     avgErr{i}=[err1;err2;err3];
     fprintf('using student average:\n\t%f\t%f\t%f\n', mean(err1), mean(err2), mean(err3));
     
-    [err1,err2,err3]=evalConstEachMovie(activeMatTrain,activeMatTest,...
+    [err1,err2,err3]=evalAvgGradeInClass(activeMatTrain,activeMatTest,otherMat,...
         S.numValues,S.K,S.coeff);
     constErr{i}=[err1;err2;err3];
     fprintf('using course average:\n\t%f\t%f\t%f\n', mean(err1), mean(err2), mean(err3));
