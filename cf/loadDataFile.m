@@ -16,7 +16,6 @@ currUser=0;
 numUsers=0;
 i = 0;
 while 1
-    i = i + 1;
     tline = fgetl(fid);
     if ~ischar(tline), break, end
     numLine=sscanf(tline,'%f');
@@ -24,14 +23,18 @@ while 1
         numUsers = numUsers+1;
         currUser = numLine(1);
     end
-    if numUsers > numUsersLimit, break;end
+    if numUsers > numUsersLimit, break; end
+    if numLine(3) > 13
+        continue
+    end
+    i = i + 1;
     mat(i, :) = numLine(1:3);
     if mod(i, 10000) == 0
         fprintf('Loaded %d users, %d lines\n', numUsers, i);
     end
 end
 
-studentCourseMat=spconvert(mat);
+studentCourseMat=spconvert(mat(1:i, :));
 [studentCourseMat, courseIDMap] = filterMat(studentCourseMat);
 fclose(fid);
 return
