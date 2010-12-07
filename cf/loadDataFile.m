@@ -1,9 +1,9 @@
-function userVoteMat=loadDataFile(filename, numUsersLimit)
+function [studentCourseMat, courseIDMap] = loadDataFile(filename, numUsersLimit)
 % Reads the ./Votes.txt file of the eachmovie dataset into
 % a sparse matrix, whose rows indicate users and columns 
 % indicte movies.
 %
-% FUNCTION userVoteMat=eachMovieReader(numUsersLimit)
+% FUNCTION studentCourseMat=eachMovieReader(numUsersLimit)
 %
 % The function terminates after numUsersLimit different 
 %      users are read.
@@ -11,64 +11,53 @@ function userVoteMat=loadDataFile(filename, numUsersLimit)
 % Guy Lebanon, June 2003
 
 fid = fopen(filename);
-mat=[];
+mat = zeros(140934, 3);
 currUser=0;
 numUsers=0;
-lastUsers=0;
+i = 0;
 while 1
+    i = i + 1;
     tline = fgetl(fid);
     if ~ischar(tline), break, end
     numLine=sscanf(tline,'%f');
-    numLine=transformVote(numLine);
-    if currUser~=numLine(1), 
-        numUsers=numUsers+1;
-        currUser=numLine(1);
+    if currUser ~= numLine(1)
+        numUsers = numUsers+1;
+        currUser = numLine(1);
     end
-    if numUsers>numUsersLimit, break;end
-    mat=[mat;numLine(1:3)'];
-    if mod(numUsers, 1000) == 0 && numUsers ~= lastUsers
-        lastUsers = numUsers;
-        fprintf('Loaded %d users\n', numUsers);
+    if numUsers > numUsersLimit, break;end
+    mat(i, :) = numLine(1:3);
+    if mod(i, 10000) == 0
+        fprintf('Loaded %d users, %d lines\n', numUsers, i);
     end
 end
-userVoteMat=spconvert(mat);
-userVoteMat=compressUserVoteMat(userVoteMat);
+
+studentCourseMat=spconvert(mat);
+[studentCourseMat, courseIDMap] = filterMat(studentCourseMat);
 fclose(fid);
 return
 
-function numLine=transformVote(numLine)
-% Transforms the original eachmovie votes
-% (0,0.2,0.4,0.6,0.8,1) to the scale 1-6.
-switch numLine(3), 
-case 0
-    numLine(3)=1;
-case 0.2
-    numLine(3)=2;
-case 0.4
-    numLine(3)=3;
-case 0.6
-    numLine(3)=4;
-case 0.8
-    numLine(3)=5;
-case 1
-    numLine(3)=6;
-end
-return
-
-function userVoteMat=compressUserVoteMat(userVoteMat)
+function [studentCourseMat, courseIDMap] = filterMat(studentCourseMat)
 % Removes classes with less than 3 grades
 % and users with less than 4 classes
 
-userVoteBinary=spones(userVoteMat);
-ind=find(sum(userVoteBinary)<3);
-userVoteMat(:,ind)=[];
+numCourses = size(studentCourseMat, 2);
+courseIDMap = 1:numCourses;
 
-userVoteBinary=spones(userVoteMat);
-ind=find(sum(userVoteBinary,2)<4);
-userVoteMat(ind,:)=[];
+% remove courses with less than 3 grades
+binaryMat = spones(studentCourseMat);
+ind = find(sum(binaryMat) < 3);
+studentCourseMat(:,ind)=[];
+courseIDMap(ind) = [];
 
-userVoteBinary=spones(userVoteMat);
-ind=find(sum(userVoteBinary)==0);
-userVoteMat(:,ind)=[];
+% remove users with less than 4 courses
+binaryMat = spones(studentCourseMat);
+ind = find(sum(binaryMat, 2) < 4);
+studentCourseMat(ind,:)=[];
+
+% remove courses with no users
+binaryMat = spones(studentCourseMat);
+ind = find(sum(binaryMat) == 0);
+studentCourseMat(:,ind)=[];
+courseIDMap(ind) = [];
 
 return 
