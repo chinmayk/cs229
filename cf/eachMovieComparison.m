@@ -4,7 +4,7 @@ function [sim1Err,sim2Err,PDErr,avgErr,constErr,S]=eachMovieComparison(S)
 ABSOLUTE = 1; PERCENTAGE = 2; EXACT = 3;
 
 % how do we choose the number of courses to reserve for testing?
-METHOD = EXACT;
+METHOD = ABSOLUTE;
 %METHOD = PERCENTAGE;
 
 if isfield(S, 'userMat')

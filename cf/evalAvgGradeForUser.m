@@ -12,5 +12,9 @@ for j=1:numActive
     predPref = ones(size(truePref)) * avgUser;
     L2err(j)=mean((predPref-truePref).^2);
     L1err(j)=norm(predPref-truePref,1)/length(predPref);
+    if isnan(L1err(j))
+        1
+    end
+    
     rankedErr(j)=rankedEvalCF(predPref,truePref,K,coeff);
 end

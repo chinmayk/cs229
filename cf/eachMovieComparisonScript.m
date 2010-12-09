@@ -11,7 +11,7 @@ S.userMat = userMat;
 
 S.activePerc=0.1;
 S.percentToPredict=0.1;
-S.crossValNum=100;
+S.crossValNum=20;
 S.K=10;
 S.coeff=0.5;
 S.sigma=0.7;
@@ -28,7 +28,7 @@ S.coursesToPredict = 3; % try to predict 3 courses for each student
 % for predicting only for one course:
 S.courseIDMap = courseIDMap; % mapping of IDs to course indices
 courses = [1738, 3634, 6107, 10853, 12688, 17316, 20197, 21837, 23805, 31075, 31632, 1962, 6107, 16796, 21691, 23092, 23849, 29783];
-S.courseID = courses(1);
+S.courseID = courses(2);
 S.maxIter = 50;
 
 [sim1Err,sim2Err,PDErr,avgErr,constErr,S]=eachMovieComparison(S);
