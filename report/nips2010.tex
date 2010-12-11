@@ -49,7 +49,7 @@ We think value prediction for item-attributes is especially useful for a) attrib
 
 In our system, the exemplar question we try to answer is ``what \textit{grade} will I make?'' for a University course recommendation. Course grades (fortunately) have all the above characteristics: the grade varies by user, is only available after the course is taken and potentially depends on other courses the student has taken in the past.
 
-\section{Prior work}
+\section{Prior Work}
 Memory-based recommendation systems make the assumption that users who have rated items similarly (i.e. favorably or unfavorably) in the past will also rate a new item similarly, so these systems typically expose, in addition to the recommended item, either other similar items the user has rated favorably in the past, or other users with tastes similar to the current user who rated the recommended item favorably. This information helps users trust recommendations~\cite{o2005trust, adomavicius2005toward}, we argue that it still does not help them directly evaluate them for two reasons.
 
 First, exposing similar items often provides no information about attribute values-- for instance, if a user is buying furniture and has rated furniture that was durable favorably in the past, the system cannot predict durability, despite showing that the current recommendation is ``similar'' to his past purchases. 
@@ -58,7 +58,7 @@ Second, even if information is provided, human perception of similarity is non-m
 
 Model-based approaches have problems with evaluation too. Models are often based on Bayesian networks, LSA or MDPs-- while these models have good accuracy, they can't predict attributes they weren't trained for [TODO can someone rephrase?].
 
-\section{Predicting grades}
+\section{Predicting Grades}
 Our data is drawn from the CourseRank website, which is a course-recommendation website run at Stanford.
 
 \input{svm}
