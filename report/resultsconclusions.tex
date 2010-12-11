@@ -5,15 +5,15 @@
 
 \subsubsection{Prediction Accuracy compared to baselines}
 
-We trained A vs. non-A and multi-class SVMs for each of 17 courses that had at least 100 student records. We compared the 10-fold cross-validation accuracy against the average course grade and student's GPA baselines. For the student's GPA baseline, if a student has not taken a course before, his or her grade is predicted to be the average course grade. The results are shown in the tables below.
+We trained A vs. non-A and multi-class SVMs for each of 17 courses that had at least 100 student records. We compared the 10-fold cross-validation accuracy against the average course grade and student's GPA baselines. For the student's GPA baseline, if a student has not taken a course before, his or her grade is predicted to be the average course grade. The results are shown in the Tables \ref{svm-accuracy-table} and \ref{svm-mae-table} below.
 
-On average, both types of SVMs outperformed the mean course grade baseline and are comparable to the student's GPA baseline. Overall, the multi-class SVM correctly predicts a slightly greater percentage of students within a +/- letter grade when compared to the baselines.
+On average, both types of SVMs outperformed the mean course grade baseline and are comparable to the student's GPA baseline. Overall, the multi-class SVM correctly predicts a slightly greater percentage of students within a half letter grade when compared to the baselines.
 
-\begin{table}[htbp]
+\begin{table}[htbp]\scriptsize
 \caption{Average accuracy for the A vs. non-A SVMs compared to the baselines (higher is better)}
 \label{svm-accuracy-table}
 \begin{center}
-\begin{tabular}{ll}
+\begin{tabular}{lr}
 \multicolumn{1}{c}{\bf Predictor}  &\multicolumn{1}{c}{\bf Average Accuracy}
 \\ \hline \\
 A vs. non-A SVM &64.2\% \\
@@ -24,11 +24,11 @@ Mean course grade &60.6\% \\
 \end{table}
 
 
-\begin{table}[htbp]
+\begin{table}[htbp]\scriptsize
 \caption{Comparing the multi-class SVMs compared to the baselines. An error of 1 corresponds to a half letter grade error, while an error of 2 corresponds to a full letter grade error.}
 \label{svm-mae-table}
 \begin{center}
-\begin{tabular}{lll}
+\begin{tabular}{lrr}
 \multicolumn{1}{c}{\bf Predictor}  &\multicolumn{1}{c}{\bf Average MAE}  &\multicolumn{1}{c}{\bf Within a half letter grade}
 \\ \hline \\
 Multi-class SVM &1.38 & 65.2\%\\
@@ -41,7 +41,7 @@ Mean course grade &1.45 &57.0\% \\
 
 \subsubsection{Most important features}
 
-We evaluated the contribution of each set of features by training the A vs. non-A SVM exclusively on each set  and comparing the 10-fold cross-validation accuracies against the baseline statistical accuracy.
+We evaluated the contribution of each set of features by training the A vs. non-A SVM exclusively on each set  and comparing the 10-fold cross-validation accuracies against the baseline statistical accuracy. Table \ref{svm-features-table} shows the results.
 
 Overall, the top four features in order were previous course history, recent grades by department, student's major, and concurrent courses. Weekly workload did not contribute to the accuracy of any of the selected courses, and the number of taken courses only influenced accuracy in CS161 out of the 17 courses tested.
 
