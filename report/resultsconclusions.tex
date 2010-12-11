@@ -48,29 +48,29 @@ Overall, the top four features in order were previous course history, recent gra
 However, across different courses, the features that most influenced prediction accuracy varied. For example, in CS161, all of the features except for weekly workload contributed to the prediction rate, and the student’s previous course grades were the most significant predictor. On the other hand, in ARTSTUDI60, the student’s major was the most significant predictor. In CHEM31A, none of the features contributed to the accuracy, suggesting that different factors may better characterize course grades in this case.
 
 \begin{table}[t]
-\caption{Percent accuracy increases for A vs. non-A SVM when including only one of the feature types}
+\caption{Percent accuracy increases for A vs. non-A SVM when including only one of the feature types. The largest contributer for each course is highlighted.}
 \label{svm-features-table}
 \begin{center}
 \begin{tabular}{lllllll}
 \multicolumn{1}{c}{\bf Course}  &\multicolumn{1}{c}{\bf Dept. GPA} &\multicolumn{1}{c}{\bf Concurr. courses} &\multicolumn{1}{c}{\bf Course grades} &\multicolumn{1}{c}{\bf Major} &\multicolumn{1}{c}{\bf Workload} &\multicolumn{1}{c}{\bf Num. Prev. Courses}
 \\ \hline \\
-ARTSTUDI60&	0&	1.83&	1.83&	5.50&	0&	0\\
+ARTSTUDI60&	0&	1.83&	1.83& \cellcolor[gray]{0.8}5.50&	0&	0\\
 CHEM31A	& 0	& 0 &	0 &	0 &	0&	0\\
-CHEM33&	3.11&	0.35&	1.29&	0.09&	0&	0\\
-CS105&	0.17&	0.50&	2.67&	0.50&	0&	0\\
-CS106A&	0.63&	0.00&	1.40&	3.29&	0&	0\\
-CS161	&10.21&	8.80&16.90&	5.99&	0&	11.27\\
-CS229	&0&	1.96&	0&	0&	0&	0\\
-EE108B&	0&	1.86&	0&	1.24&	0&	0\\
-HUMBIO2A&	0.31&	0&	6.16&	0&	0&	0\\
-HUMBIO2B&	5.24&	0&	7.26&	0&	0&	0\\
-IHUM2&	7.99&	1.91&	6.25&	5.90&	0&	0\\
-IHUM57&	0&	1.01&	0&	0&	0&	0\\
-IHUM63&	0&	0.66&	0&	0&	0&	0\\
-MATH42&	4.40&	0&	0.51&	0&	0	&0\\
-PHYSICS43&	4.93&	1.15&	5.92&	1.15&	0&	0\\
-PSYCH1&	1.67&	1.12&	1.12&	1.49&	0&	0\\
-POLISCI1&	0.34&	1.02&	3.07&	2.39&	0&	0\\
+CHEM33&\cellcolor[gray]{0.8}	3.11&	0.35&	1.29&	0.09&	0&	0\\
+CS105&	0.17&	0.50&\cellcolor[gray]{0.8}2.67&	0.50&	0&	0\\
+CS106A&	0.63&	0.00&	1.40&\cellcolor[gray]{0.8}	3.29&	0&	0\\
+CS161	&10.21&	8.80&\cellcolor[gray]{0.8}16.90&	5.99&	0&	11.27\\
+CS229	&0&\cellcolor[gray]{0.8}	1.96&	0&	0&	0&	0\\
+EE108B&	0&\cellcolor[gray]{0.8}	1.86&	0&	1.24&	0&	0\\
+HUMBIO2A&	0.31&	0&\cellcolor[gray]{0.8}	6.16&	0&	0&	0\\
+HUMBIO2B&	5.24&	0&\cellcolor[gray]{0.8}	7.26&	0&	0&	0\\
+IHUM2&\cellcolor[gray]{0.8}	7.99&	1.91&	6.25&	5.90&	0&	0\\
+IHUM57&	0&\cellcolor[gray]{0.8}	1.01&	0&	0&	0&	0\\
+IHUM63&	0&\cellcolor[gray]{0.8}	0.66&	0&	0&	0&	0\\
+MATH42&\cellcolor[gray]{0.8}	4.40&	0&	0.51&	0&	0	&0\\
+PHYSICS43&	4.93&	1.15&\cellcolor[gray]{0.8}	5.92&	1.15&	0&	0\\
+PSYCH1&\cellcolor[gray]{0.8}	1.67&	1.12&	1.12&	1.49&	0&	0\\
+POLISCI1&	0.34&	1.02&\cellcolor[gray]{0.8}	3.07&	2.39&	0&	0\\
 \\ \hline \\
 Average &2.29&	1.30&	3.20&	1.62&	0.00&	0.66\\
 
