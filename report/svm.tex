@@ -1,0 +1,18 @@
+\subsection{SVM}
+we trained an SVM to detect A versus non-A grades, where doing well in a course meant getting an A grade.  We also trained a multi-class SVM to predict grades across the whole letter grade spectrum from A+ to F. One SVM was trained per course.
+
+All SVMs were  trained using a Gaussian kernel. The C and gamma parameters for the kernel were chosen via a rough grid-based search on C=[128 64 32 8 4 2 1] and gamma=[1/numFeatures 2/numFeatures 4/numFeatures 8/numFeatures] to maximize the 10-fold cross validation accuracy. The multi-class SVM was implemented using multiple SVMs that compared grades higher than a certain threshold against the grades lower than the threshold. That is, there is one SVM that predicts each of  A+ vs other grades, A or above vs. below A, A- or above vs. below A-, and so on for each unique grade appearing in the course. The final predicted grade is then decided by a majority vote among all the individual SVMs.
+
+Features
+Given the CourseRank transcript data, we chose six features that we hypothesized may affect course grades.
+\begin{itemize}
+\item Previous course grades 
+\item Recent GPA by department (last three quarters)
+\item Student’s major
+\item Concurrent courses the student is taking
+\item Weekly workload of quarter
+\item Number of courses previously taken
+\end{itemize}
+
+These features provide some information on the students’ experience with related courses and subjects at Stanford, whether the course is a requirement or an elective for their major, and how much time they have to spend on the course.
+
