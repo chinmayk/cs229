@@ -1,6 +1,7 @@
 \documentclass{article} % For LaTeX2e
 \usepackage{nips10submit_e,times}
 %\usepackage{xcolor}
+\usepackage{amsmath, amsthm, amssymb}
 \usepackage{url}
 \usepackage{colortbl}
 %\documentstyle[nips10submit_09,times,art10]{article} % For LaTeX 2.09
@@ -39,19 +40,17 @@ In order to help each user select the recommendation that aligns best with his o
 
 \section{Introduction}
 \label{sec:intro}
-Recommendation systems attack the general problem of recommending users items that are likely to be of interest to them. This is typically viewed as a problem of predicting the ``rating'' of a given item, based on known ratings of other items, followed by finding items that have the highest ratings. Recommendation systems have been used in a variety of applications, and depending on the application, the \textit{items} could be physical goods, movies, research papers, webpages, educational courses, etc~\cite{schafer1999recommender}. Similarly, the \textit{ratings} could either be explicitly provided by the user (e.g. using a 1-to-5 star rating, or a Likert scale), or obtained implicitly by the system (e.g. the number of times a webpage was visited).
+Recommendation systems attack the general problem of recommending items to a user that are likely to be of interest. This typically requires estimating \textit{ratings} for a set of items with unknown ratings based on another set of items with known ratings.  The items with the highest expected ratings are recommended to the user. Recommendation systems have been applied to various types of items including physical goods, movies, research papers, webpages, educational courses, etc.~\cite{schafer1999recommender}. Similarly, the ratings could either be explicitly provided by the user (e.g. using a 1-to-5 star rating, or a Likert scale) or obtained implicitly by the system (e.g. the number of times a webpage was visited).
 
-Recommendation systems are primarily either model-based or memory-based. A model-based system abstracts a model that predicts ratings for a given user and item. A memory-based system uses unsupervised learning to cluster either user or item data based on the known ratings. An unknown rating is then approximated with a weighted average of known ratings, the weight being the distance of the unrated item and the rated items. Memory-based systems have been particularly popular, since they makes fewer assumptions regarding what factors contributed to a rating, and are more likely to produce diverse recommendations than a model-based approach. 
+Recommendation systems are primarily either model-based or memory-based. A model-based system abstracts a probabilistic model that predicts ratings for a given user and item. A memory-based system uses unsupervised learning to cluster either user or item data based on known ratings. An unknown rating is then approximated with a weighted average of known ratings.  The weights are determined by computing the distance between unknown and known items with a reasonable distance metric. Memory-based systems have been particularly popular, since they make fewer assumptions regarding what factors contribute to a rating and are more likely to produce diverse recommendations than a model-based approach. 
 
-However, users may have specific needs for recommendations that are not covered well by an overall goodness score or ranking. In these cases, the user still has to evaluate the given set of recommendations in order to find the most useful ones for his or her purposes. In this paper, we explore how users can be assisted in this task. One particular aspect that we focus on is value prediction for more specific item-attributes. This is useful for answering questions such as, ``how \textit{suspenseful} is this recommended movie?'', or ``how \textit{important} is this research paper?''. 
+Users may have specific needs for recommendations that are not fully addressed by an overall rating. In these cases, the user has to evaluate the given set of recommendations in order to find the most useful ones. In this paper, we explore one particular instance where users can be assisted in this task. One particular aspect that we focus on is value prediction for more specific item-attributes. This is useful for answering questions such as, ``how \textit{suspenseful} is this recommended movie?'', or ``how \textit{important} is this research paper?''. 
 
 %We think value prediction for item-attributes is especially useful for a) attributes whose values vary by user (e.g. ``interestingness'' for a book) b) attribute values that can only be measured after the item is consumed (e.g. ``durability'' for furniture) and c) attributes that may change based on whether the user has consumed other items (e.g. ``understandability'' for movie sequels [TODO less cheesy examples?]) 
 
-In our system, the exemplar question we try to answer is ``what \textit{grade} will I make?'' for a University course recommendation. Course grades are particularly interesting because they vary by student and may be different depending on when the course is taken. We use both SVM and collaborative filtering-based approaches to predict student grades based on student transcript and schedule data.
-
+In our system, the exemplar question we try to answer is ``what \textit{grade} will I make?'' for a University course recommendation. Course grades are particularly interesting because they vary by student and when the course is taken. We use both SVM and collaborative-filtering-based approaches to predict student grades based on student transcript and schedule data.
 
 %Course grades (fortunately) have all the above characteristics: the grade varies by user, is only available after the course is taken and potentially depends on other courses the student has taken in the past.
-
 
 %Maybe merge some of the below material in previous work with the intro? 
 
