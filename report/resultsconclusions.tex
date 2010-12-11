@@ -3,7 +3,7 @@
 
 \subsection{SVM Results}
 
-We trained A vs. non-A and multi-class SVMs for each of 17 courses that had at least 100 student records. We compared the 10-fold cross-validation accuracy against the average course grade and student's GPA baselines. For the student's GPA baseline, if a student has not taken a course before, his or her grade is predicted to be the average course grade. The results are shown in the Tables \ref{svm-accuracy-table} and \ref{svm-mae-table} below.
+We trained A vs. non-A and multi-class SVMs for each of 17 courses that had at least 100 student records. We compared the 10-fold cross-validation accuracy against the average course grade and student's GPA baselines. For the student's GPA baseline, if a student has not taken a course before, his or her grade is predicted to be the average course grade. The results are shown in the Tables 1 and 2 below.
 
 \subsubsection{Prediction Accuracy Compared to Baselines}
 
@@ -41,7 +41,7 @@ Mean course grade &1.45 &57.0\% \\
 
 \subsubsection{Most Important Features}
 
-We evaluated the contribution of each set of features by training the A vs. non-A SVM exclusively on each set  and comparing the 10-fold cross-validation accuracies against the baseline statistical accuracy. Table \ref{svm-features-table} shows the results.
+We evaluated the contribution of each set of features by training the A vs. non-A SVM exclusively on each set  and comparing the 10-fold cross-validation accuracies against the baseline statistical accuracy. Table 3 shows the results.
 
 Overall, the top four features in order were previous course history, recent grades by department, student's major, and concurrent courses. Weekly workload did not contribute to the accuracy of any of the selected courses, and the number of taken courses only influenced accuracy in CS161 out of the 17 courses tested.
 
@@ -81,7 +81,7 @@ Average &2.29&	1.30&	3.20&	1.62&	0.00&	0.66\\
 
 \subsection{Results of Collaborative Filtering}
 
-For CF, we filtered data to remove all courses with fewer than 3 grades and all students with fewer than 4 courses, resulting in 5,930 students and 3,603 courses.  We tested against the entire dataset and specific classes.  For the entire dataset, $10\%$ of the students were randomly separated with 3 courses per student removed.  Each student was compared with the remaining $90\%$ (5337) to compute the top-$n$ most similar students. The results are shown in Table~\ref{cf-mae-table}.
+For CF, we filtered data to remove all courses with fewer than 3 grades and all students with fewer than 4 courses, resulting in 5,930 students and 3,603 courses.  We tested against the entire dataset and specific classes.  For the entire dataset, $10\%$ of the students were randomly separated with 3 courses per student removed.  Each student was compared with the remaining $90\%$ (5337) to compute the top-$n$ most similar students. The results are shown in Table 4.
 
 The primary reason the estimates from CF are not much better than the estimate based on students' GPAs is that the dataset is too sparse to find similar users.  Upon analysis of similar users, we find that the similarity coefficients are very small ($O(10^-3)$).  We further validate this by noting that analysis shows the error of the student GPA estimates and the CF estimates are highly correlated.  Because the similarity coefficients determine the deviation of the estimate from the average, the CF estimates generated with small similarity coefficients are very similar to the student GPA estimates.
 
