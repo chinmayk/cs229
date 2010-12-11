@@ -31,12 +31,13 @@ Martin Hunt, Sharon Lin, Chinmay Kulkarni \\
 \maketitle
 
 \begin{abstract}
-Recommendation systems have been used in a variety of domains, ranging from online-joke recommendations to automatic educational course recommendations.To better evaluate recommendations, the user can be presented with estimations for the various attributes of a recommendation. We attempt to construct one particular potential value-predictor: the estimated grade a student will receive for a given course. Data is from the CourseRank recommendation system.
+Recommendation systems have been used in a variety of domains, ranging from online-joke recommendations to automatic educational course recommendations.
+To better evaluate recommendations, the user can be presented with estimations for the various attributes of a recommendation. We attempt to construct one particular potential value-predictor: the estimated grade a student will receive for a given course. Data is from the CourseRank recommendation system.
 \end{abstract}
 
 \section{Introduction}
 \label{sec:intro}
-Recommendation systems attack the general problem of recommending users items that are likely to be of interest to them. This is typically viewed as a problem of predicting the ``rating'' of a given item, based on known ratings of other items, followed by finding items that have the highest ratings. Recommendation systems have been used in a variety of applications, and depending on the application, the \textit{items} could be physical goods, movies, research papers, webpages, educational courses, etc. Similarly, the \textit{ratings} could either be explicitly provided by the user (e.g. using a 1-to-5 star rating, or a Likert scale), or obtained implicitly by the system (e.g. the number of times a webpage was visited).
+Recommendation systems attack the general problem of recommending users items that are likely to be of interest to them. This is typically viewed as a problem of predicting the ``rating'' of a given item, based on known ratings of other items, followed by finding items that have the highest ratings. Recommendation systems have been used in a variety of applications, and depending on the application, the \textit{items} could be physical goods, movies, research papers, webpages, educational courses, etc~\cite{schafer1999recommender}. Similarly, the \textit{ratings} could either be explicitly provided by the user (e.g. using a 1-to-5 star rating, or a Likert scale), or obtained implicitly by the system (e.g. the number of times a webpage was visited).
 
 Recommendation systems are primarily either model-based or memory-based. A model-based system abstracts a model that predicts ratings for a given user and item. A memory-based system uses unsupervised learning to cluster user-item data (either the users or the items may be clustered) based on the known ratings. An unknown rating is then approximated with a weighted average of known ratings, the weight being the distance of the unrated item and the rated items. Memory-based systems have been particularly popular, since they makes fewer assumptions regarding what factors contributed to a rating, and are more likely to produce diverse recommendations than a model-based approach. 
 
@@ -44,16 +45,16 @@ While recommendation systems recommend a set of items to a user, the user still 
 
 We think value prediction for item-attributes is especially useful for a) attributes whose values vary by user (e.g. ``interestingness'' for a book) b) attribute values that can only be measured after the item is consumed (e.g. ``durability'' for furniture) and c) attributes that may change based on whether the user has consumed other items (e.g. ``understandability'' for movie sequels [TODO less cheesy examples?]) 
 
-In our system, the exemplar question we try to answer is ``what \textit{grade} will I make?'' for a University course recommendation. Course grades (fortunately) have all the above characteristics: the grade varies by user, is only available after the course is taken and potentially depends on other courses the student has taken in the past.\subsection{Prior work}
+In our system, the exemplar question we try to answer is ``what \textit{grade} will I make?'' for a University course recommendation. Course grades (fortunately) have all the above characteristics: the grade varies by user, is only available after the course is taken and potentially depends on other courses the student has taken in the past.
 
-Memory-based recommendation systems make the assumption that users who have rated items similarly (i.e. favorably or unfavorably) in the past will also rate a new item similarly, so these systems typically expose, in addition to the recommended item, either other similar items the user has rated favorably in the past, or other users with tastes similar to the current user who rated the recommended item favorably. This information helps users trust recommendations [cite], we argue that it still does not help them directly evaluate them for two reasons.
+\subsection{Prior work}
+Memory-based recommendation systems make the assumption that users who have rated items similarly (i.e. favorably or unfavorably) in the past will also rate a new item similarly, so these systems typically expose, in addition to the recommended item, either other similar items the user has rated favorably in the past, or other users with tastes similar to the current user who rated the recommended item favorably. This information helps users trust recommendations~\cite{o2005trust, adomavicius2005toward}, we argue that it still does not help them directly evaluate them for two reasons.
 
 First, exposing similar items often provides no information about attribute values-- for instance, if a user is buying furniture and has rated furniture that was durable favorably in the past, the system cannot predict durability, despite showing that the current recommendation is ``similar'' to his past purchases. 
 
-Second, even if information is provided, human perception of similarity is non-metric, so humans still can't accurately estimate attributes values. In particular, similarity perception is not symmetric (for instance, China is perceived to be more similar to North Korea than North Korea is to China), and it does not follow the triangle-inequality (similarity of (A with B) + (B with C) could be less than A with C) [cite].
+Second, even if information is provided, human perception of similarity is non-metric, so humans still can't accurately estimate attributes values. In particular, similarity perception is not symmetric (for instance, China is perceived to be more similar to North Korea than North Korea is to China), and it does not follow the triangle-inequality (similarity of (A with B) + (B with C) could be less than A with C)~\cite{tversky1982similarity}.
 
 Model-based approaches have problems with evaluation too. Models are often based on Bayesian networks, LSA or MDPs-- while these models have good accuracy, they can't predict attributes they weren't trained for [TODO can someone rephrase?].
-
 
 \section{Predicting grades}
 Our data is drawn from the CourseRank website, which is a course-recommendation website run at Stanford.
@@ -63,6 +64,9 @@ Our data is drawn from the CourseRank website, which is a course-recommendation 
 
 \subsection{Collaborative filtering}
 
+Please read carefully the
+instructions below, and follow them faithfully.
+\subsection{Style}
 
 
 %Need to add CF stuff to results and conclusions
@@ -74,5 +78,6 @@ Our data is drawn from the CourseRank website, which is a course-recommendation 
 %sample is the nips sample formatting guidlines, comment out when not needed anymore
 
 %\input{sample}
-
+\bibliographystyle{abbrv}
+\bibliography{refs}
 \end{document}
