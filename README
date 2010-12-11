@@ -1,0 +1,6 @@
+To compile the report:
+
+cd report
+pdflatex nips2010 && bibtex nips2010 && pdflatex nips2010 && pdflatex nips2010
+
+
