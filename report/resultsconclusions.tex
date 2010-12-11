@@ -5,9 +5,9 @@
 
 \subsubsection{Prediction Accuracy compared to baselines}
 
-We trained A vs. non-A and multi-class SVMs for each of 17 courses that had at least 100 student records. We compared the 10-fold cross-validation accuracy against the average course grade and student’s GPA baselines. For the student’s GPA baseline, if a student has not taken a course before, his or her grade is predicted to be the average course grade. The results are shown in the tables below.
+We trained A vs. non-A and multi-class SVMs for each of 17 courses that had at least 100 student records. We compared the 10-fold cross-validation accuracy against the average course grade and student's GPA baselines. For the student's GPA baseline, if a student has not taken a course before, his or her grade is predicted to be the average course grade. The results are shown in the tables below.
 
-On average, both types of SVMs outperformed the mean course grade baseline and are comparable to the student’s GPA baseline. Overall, the multi-class SVM correctly predicts a slightly greater percentage of students within a +/- letter grade when compared to the baselines.
+On average, both types of SVMs outperformed the mean course grade baseline and are comparable to the student's GPA baseline. Overall, the multi-class SVM correctly predicts a slightly greater percentage of students within a +/- letter grade when compared to the baselines.
 
 \begin{table}[htbp]
 \caption{Average accuracy for the A vs. non-A SVMs compared to the baselines (higher is better)}
@@ -47,11 +47,11 @@ Overall, the top four features in order were previous course history, recent gra
 
 However, across different courses, the features that most influenced prediction accuracy varied. For example, in CS161, all of the features except for weekly workload contributed to the prediction rate, and the student’s previous course grades were the most significant predictor. On the other hand, in ARTSTUDI60, the student’s major was the most significant predictor. In CHEM31A, none of the features contributed to the accuracy, suggesting that different factors may better characterize course grades in this case.
 
-\begin{table}[t]
+\begin{table}[t]\scriptsize
 \caption{Percent accuracy increases for A vs. non-A SVM when including only one of the feature types. The largest contributer for each course is highlighted.}
 \label{svm-features-table}
 \begin{center}
-\begin{tabular}{lllllll}
+\begin{tabular}{lrrrrrr}
 \multicolumn{1}{c}{\bf Course}  &\multicolumn{1}{c}{\bf Dept. GPA} &\multicolumn{1}{c}{\bf Concurr. courses} &\multicolumn{1}{c}{\bf Course grades} &\multicolumn{1}{c}{\bf Major} &\multicolumn{1}{c}{\bf Workload} &\multicolumn{1}{c}{\bf Num. Prev. Courses}
 \\ \hline \\
 ARTSTUDI60&	0&	1.83&	1.83& \cellcolor[gray]{0.8}5.50&	0&	0\\
@@ -74,14 +74,26 @@ POLISCI1&	0.34&	1.02&\cellcolor[gray]{0.8}	3.07&	2.39&	0&	0\\
 \\ \hline \\
 Average &2.29&	1.30&	3.20&	1.62&	0.00&	0.66\\
 
-
 \end{tabular}
 \end{center}
 \end{table}
 
 \subsection{Collaborative Filtering results}
 
+\begin{table}[t]\scriptsize
+\caption{Percent accuracy increases for A vs. non-A SVM when including only one of the feature types. The largest contributer for each course is highlighted.}
+\label{cf-mae-table}
+\begin{center}
 
+\begin{tabular}{lrrr}
+    
+    \multicolumn{1}{c}{\bf cosine sim}  &\multicolumn{1}{c}{\bf pearson's corr} &\multicolumn{1}{c}{\bf student average} &\multicolumn{1}{c}{\bf course average}
+    \\ \hline \\
+    1.3896    &1.3704    &1.4231    &3.2140 \\
+    3.9439    &3.7505    &4.0451   &14.4421
+\end{tabular}
+\end{center}
+\end{table}
 
 \section{Conclusion and Future Work}
 
@@ -89,4 +101,4 @@ Past course history can only go so far in predicting future course grades. A sig
 
 It is also possible that the unexpected occurrences throughout the quarter may have greater influence on grades. For example, a student may just not have studied enough for a final exam, which heavily influences his or her grade. Individual personality factors may also play a part, where doing poorly on a similar course in the past may drive some students to work harder on a similar course in the future.
 
-For collaborative filtering, we could broaden our hypothesis and, for a student $s$ and course $c$, try try to find students that have not only taken the same courses as $s$ an also taken $c$, but who have taken similar courses to both $c$ and courses similar to those taken by $s$.  This can help overcome the sparsity of the data, which is evidenced by the high correlation of the collaborative filtering results to the student average baseline estimate.  Some work at combining user-based and item-based collaborative filtering has been investigated in \cite{fusion}.
+For collaborative filtering, we could broaden our hypothesis and, for a student $s$ and course $c$, try try to find students that have not only taken the same courses as $s$ an also taken $c$, but who have taken similar courses to both $c$ and courses similar to those taken by $s$.  This can help overcome issues with sparse datasets, which may be the case here considering the high correlation between the MAE of the collaborative filtering and student average baseline estimates.  Some work at combining user-based and item-based collaborative filtering to overcome sparseness has been investigated in \cite{fusion}.
