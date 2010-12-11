@@ -20,7 +20,7 @@ if (option==3)
     result = sqrt(mean((predicted-expected).*(predicted-expected)));
 end
 if (option==4)
-    result = sum((predicted-expected).*(predicted-expected));
+    result = sum((predicted-expected).*(predicted-expected))/max(size(predicted));
 end
 if (option==5)
     %recall

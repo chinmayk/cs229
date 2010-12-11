@@ -46,6 +46,24 @@ for i=1:size(courseids,2)
     
     [labels, features] = libsvmread(['course',num2str(courseids(i))]);
     
+    
+    numPrevCourses = features(:, 2*numDepts+2*numCourses+numMajors+3);
+    nonzeroRows = find(numPrevCourses>0);
+    filteredfeatures = zeros(max(size(nonzeroRows)), size(features,2));
+    filteredlabels = zeros(max(size(nonzeroRows)),1);
+    newconcurrCourses = zeros(max(size(nonzeroRows)), size(concurrCourses,2));
+    
+    %filter out students with no courses
+    for s=1:max(size(nonzeroRows))
+        filteredfeatures(s,:) = features(nonzeroRows(s),:);
+        filteredlabels(s) = labels(nonzeroRows(s));
+        newconcurrCourses(s,:) = concurrCourses(nonzeroRows(s));
+    end
+    
+    features = filteredfeatures;
+    labels = filteredlabels;
+    concurrCourses = newconcurrCourses;
+    
     %scale the data
     cursor = 1;
     recentdept = features(:,1:numDepts)./4.33;
@@ -70,6 +88,29 @@ for i=1:size(courseids,2)
     bestC = 1;
     bestCrossAcc = 0;
     
+        
+    %Baseline is to guess the grade that happens most often
+    guess = 1;
+    if (sum(labels<0) > sum(labels>0))
+        guess = -1;
+    end
+    baseline_acc = sum(labels==guess)/size(labels,1);
+    baseline_prec = sum((labels==guess).*(guess>0))/sum(guess>0);
+    baseline_rec = opt_function(guess, labels, 5);
+
+    %Baseline 2 is student's mean grade
+    baseline2_guesses = transpose(17*sum(transpose(coursegrades))./sum(transpose(coursegrades>0)));
+    %compare against labels
+    baseline2_guesses(baseline2_guesses < 14.5) = -1;
+    baseline2_guesses(baseline2_guesses >= 14.5) = 1;
+    baseline2_guesses(isnan(baseline2_guesses)) = guess;
+    
+    baseline2_acc = sum(labels==baseline2_guesses)/size(labels,1);
+    
+    baseline2_prec = sum((labels==baseline2_guesses).*(baseline2_guesses>0))/sum(baseline2_guesses>0);
+    baseline2_rec = opt_function(baseline2_guesses, labels, 5);
+    baserecs(i) = baseline2_rec;
+    
     features = [recentdept concurrCourses coursegrades majorfeatures numHours numPrevCourses];
 
     gamma = 1.0/size(features,2);
@@ -92,28 +133,8 @@ for i=1:size(courseids,2)
     labels_train = randomized_labels(1:train_size);
     labels_test = randomized_labels(next:size(features,1));
     
-    
-    %Baseline is to guess the grade that happens most often
-    guess = 1;
-    if (sum(labels<0) > sum(labels>0))
-        guess = -1;
-    end
-    baseline_acc = sum(labels==guess)/size(labels,1);
 
-    %Baseline 2 is student's mean grade
-    baseline2_guesses = transpose(17*sum(transpose(coursegrades))./sum(transpose(coursegrades>0)));
-    %compare against labels
-    baseline2_guesses(baseline2_guesses < 14.5) = -1;
-    baseline2_guesses(baseline2_guesses >= 14.5) = 1;
-    baseline2_guesses(isnan(baseline2_guesses)) = guess;
-    
-    baseline2_acc = sum(labels==baseline2_guesses)/size(labels,1);
-    
-    baseline2_prec = sum((labels==baseline2_guesses).*(baseline2_guesses>0))/sum(baseline2_guesses>0);
-    baseline2_rec = opt_function(baseline2_guesses, labels, 5);
-    baserecs(i) = baseline2_rec;
 
-    continue;
     best_model = 0;
     best_crossacc = 0;
     best_params = [1 1];
@@ -251,6 +272,6 @@ numStudents
 bestParams
 compareaccs = [courseacc(:,1) baseline baseline2 courseacc(:,3) courseacc(:,4) courseacc(:,5)]
 %highprobacc
-%dlmwrite('svm_comp.csv', compareaccs);
+dlmwrite('svm_comp_filtered.csv', compareaccs);
 
        
