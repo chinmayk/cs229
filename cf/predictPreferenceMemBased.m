@@ -26,7 +26,7 @@ if size(simVec,2) > 1, simVec=simVec';end
 %     predPref = sum(spdiags(simVec,0,numUsers,numUsers) * usersMat) + activeAvg;
 % end
 
-N = 10; % top-N matches
+N = 15; % top-N matches
 
 [numUsers,numItems]=size(usersMat);
 simVec(simVec < 0) = 0;

@@ -36,7 +36,7 @@ activeMatTrain = sparse(S.numActive, S.numItems);
 activeMatTest = sparse(S.numActive, S.numItems);
 
 for i = 1:iterations
-    fprintf('Starting iteration %d/%d', i, iterations)
+    fprintf('Starting iteration %d/%d\n', i, iterations)
     if (METHOD == EXACT)
         % pick one user to be the training user
         studentIndex = studentIDs(i);
@@ -110,16 +110,16 @@ for i = 1:iterations
     fprintf('separated training and testing data:\n\t%d/%d active/test users\t%d/%d active/test course sample points\n', S.numActive, S.numOther, total_nru, total_npu);
 
     % Perform training and testing of the different models
-    [err1, err2, err3] = evalMemBasedEachMovie(activeMatTrain,...
+    [err1, err2, err3, err4] = evalMemBasedEachMovie(activeMatTrain,...
         activeMatTest,otherMat,1,S.K,S.coeff);
     fprintf('memory based (correlation) done:\n\t%f\t%f\t%f\n', mean(err1), mean(err2), mean(err3));
     
-    sim1Err{i}=[err1;err2;err3];
-    [err1,err2,err3]=evalMemBasedEachMovie(activeMatTrain,...
+    sim1Err{i}=[err1;err2;err3;ones(1,length(err3)) * err4];
+    [err1,err2,err3,err4]=evalMemBasedEachMovie(activeMatTrain,...
         activeMatTest,otherMat,2,S.K,S.coeff);
     fprintf('memory based (similarity) done:\n\t%f\t%f\t%f\n', mean(err1), mean(err2), mean(err3));
     
-    sim2Err{i}=[err1;err2;err3];
+    sim2Err{i}=[err1;err2;err3;ones(1,length(err3)) * err4];
     
     PDErr{i} = 0;
     %[err1,err2,err3]=evalPDEachMovie(activeMatTrain,...
@@ -128,13 +128,14 @@ for i = 1:iterations
     % sprintf('PD done: %f\t%f\t%f', err1, err2, err3); 
     % PDErr{i}=[err1;err2;err3];
     
-    [err1,err2,err3]=evalAvgGradeForUser(activeMatTrain,activeMatTest,...
+    [err1,err2,err3,err4]=evalAvgGradeForUser(activeMatTrain,activeMatTest,...
         S.K,S.coeff);
-    avgErr{i}=[err1;err2;err3];
+    avgErr{i}=[err1;err2;err3;ones(1, length(err3)) * err4];
     fprintf('using student average:\n\t%f\t%f\t%f\n', mean(err1), mean(err2), mean(err3));
     
-    [err1,err2,err3]=evalAvgGradeInClass(activeMatTrain,activeMatTest,otherMat,...
+    [err1,err2,err3,err4]=evalAvgGradeInClass(activeMatTrain,activeMatTest,otherMat,...
         S.numValues,S.K,S.coeff);
-    constErr{i}=[err1;err2;err3];
+    constErr{i}=[err1;err2;err3;ones(1, length(err3)) * err4];
+    
     fprintf('using course average:\n\t%f\t%f\t%f\n', mean(err1), mean(err2), mean(err3));
 end

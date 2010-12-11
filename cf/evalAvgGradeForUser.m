@@ -1,7 +1,13 @@
-function [L1err,L2err,rankedErr]=evalAvgGradeForUser(activeMatTrain,activeMatTest,...
+function [L1err,L2err,rankedErr,pErr]=evalAvgGradeForUser(activeMatTrain,activeMatTest,...
     K,coeff)
 
-[numActive,numItems] = size(activeMatTrain);
+[numActive,~] = size(activeMatTrain);
+
+L1err = zeros(1, numActive);
+L2err = zeros(1, numActive);
+rankedErr = zeros(1, numActive);
+pErr = 0;
+pSum = 0;
 
 for j=1:numActive
     % average grade for user is sum of all grades known in training matrix
@@ -12,9 +18,9 @@ for j=1:numActive
     predPref = ones(size(truePref)) * avgUser;
     L2err(j)=mean((predPref-truePref).^2);
     L1err(j)=norm(predPref-truePref,1)/length(predPref);
-    if isnan(L1err(j))
-        1
-    end
-    
-    rankedErr(j)=rankedEvalCF(predPref,truePref,K,coeff);
+    pErr = pErr + sum(abs(round(predPref) - truePref) < 2);
+    pSum = pSum + length(truePref);
+    %rankedErr(j)=rankedEvalCF(predPref,truePref,K,coeff);
 end
+
+pErr = pErr / pSum;

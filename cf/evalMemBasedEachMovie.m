@@ -1,4 +1,4 @@
-function [L1err,L2err,rankedErr]=evalMemBasedEachMovie(activeMatTrain,...
+function [L1err,L2err,rankedErr,pErr]=evalMemBasedEachMovie(activeMatTrain,...
     activeMatTest,otherMat,simMethod,K,coeff)
 % function [L1err,L2err,rankedErr]=evalMemBasedEachMovie(activeMatTrain,...
 %    activeMatTest,otherMat,simMethod,K,coeff)
@@ -15,6 +15,12 @@ activeCellVecTrain = sparseMat2CellVec(activeMatTrain);
 otherCellVec = sparseMat2CellVec(otherMat);
 [numActive,numItems] = size(activeMatTrain);
 
+L1err = zeros(1, numActive);
+L2err = zeros(1, numActive);
+rankedErr = zeros(1, numActive);
+pErr = 0;
+pSum = 0;
+
 % Obtain similarity matrices for memory base prediction
 simMat=memoryBasedModels(activeCellVecTrain,otherCellVec,simMethod,-1,numItems);
 
@@ -30,4 +36,8 @@ for j=1:numActive,
     L2err(j)=mean((predPref-truePref).^2);
     L1err(j)=norm(predPref-truePref,1)/length(predPref);
     rankedErr(j)=rankedEvalCF(predPref,truePref,K,coeff);
+    pErr = pErr + sum(abs(round(predPref) - truePref) < 2);
+    pSum = pSum + length(truePref);
 end
+
+pErr = pErr / pSum;

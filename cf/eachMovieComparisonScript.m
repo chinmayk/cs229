@@ -11,7 +11,7 @@ S.userMat = userMat;
 
 S.activePerc=0.1;
 S.percentToPredict=0.1;
-S.crossValNum=20;
+S.crossValNum=10;
 S.K=10;
 S.coeff=0.5;
 S.sigma=0.7;
