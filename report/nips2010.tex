@@ -31,8 +31,8 @@ Martin Hunt, Sharon Lin, Chinmay Kulkarni \\
 \maketitle
 
 \begin{abstract}
-Recommendation systems have been used in a variety of domains, ranging from online-joke recommendations to automatic educational course recommendations.
-To better evaluate recommendations, the user can be presented with estimations for the various attributes of a recommendation. We attempt to construct one particular potential value-predictor: the estimated grade a student will receive for a given course. Data is from the CourseRank recommendation system.
+Recommendation systems have been used in a variety of domains, ranging from online-joke recommendations to automatic educational course recommendations (CourseRank).
+To assess the value of the recommendations, users can be presented with estimations of various attributes of a recommendation, helping each user select the recommendation that aligns best with his or her goals and values.  Using the data from the CourseRank recommendation system, we attempt to construct one potential value-predictor: the estimated grade a student will receive for a given course.  Both SVMs and collaborative filtering techniques performed well, but neither could provide significantly better grade predictions than a baseline estimate of the average grade for each student.
 \end{abstract}
 
 \section{Introduction}
@@ -59,21 +59,12 @@ Model-based approaches have problems with evaluation too. Models are often based
 \section{Predicting grades}
 Our data is drawn from the CourseRank website, which is a course-recommendation website run at Stanford.
 
-
 \input{svm}
 
-\subsection{Collaborative filtering}
-
-Please read carefully the
-instructions below, and follow them faithfully.
-\subsection{Style}
-
+\input{cf}
 
 %Need to add CF stuff to results and conclusions
 \input{resultsconclusions}
-
-
-
 
 %sample is the nips sample formatting guidlines, comment out when not needed anymore
 
