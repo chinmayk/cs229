@@ -79,17 +79,14 @@ Average &2.29&	1.30&	3.20&	1.62&	0.00&	0.66\\
 \end{center}
 \end{table}
 
-
-
-
-
 \subsection{Collaborative Filtering results}
+
 
 
 \section{Conclusion and Future Work}
 
-SVM stuff...need to add in CF conclusions
-
 Past course history can only go so far in predicting future course grades. A significant percentage of students in many of the courses had not taken any courses previously, which may partially explain the low accuracy of the baselines and the SVMs. In addition, there may be more promising features that characterize the current quarter if course schedule data were available, such as potential schedule and deadline conflicts between concurrent courses and student activities. Although the concurrent courses features was intended to help capture some of the effects of schedule conflict, it is flawed in that most courses do not have a fixed schedule and instead change term by term. Thus courses that have conflicted in the past may not conflict in the future.
 
 It is also possible that the unexpected occurrences throughout the quarter may have greater influence on grades. For example, a student may just not have studied enough for a final exam, which heavily influences his or her grade. Individual personality factors may also play a part, where doing poorly on a similar course in the past may drive some students to work harder on a similar course in the future.
+
+For collaborative filtering, we could broaden our hypothesis and, for a student $s$ and course $c$, try try to find students that have not only taken the same courses as $s$ an also taken $c$, but who have taken similar courses to both $c$ and courses similar to those taken by $s$.  This can help overcome the sparsity of the data, which is evidenced by the high correlation of the collaborative filtering results to the student average baseline estimate.  Some work at combining user-based and item-based collaborative filtering has been investigated in \cite{fusion}.
