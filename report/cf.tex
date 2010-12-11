@@ -1,10 +1,10 @@
-\subsection{Collaborative filtering}
+\subsection{Collaborative Filtering}
 
 We consider another model for estimating grades based on the same methods used in the original recommendation system.  Here, we make the hypothesis that similar students will make similar grades.  Thus, for a student $s$ with course history $C_s$ and course $c \notin C_s$, we find students $s_i \in S$ with $|C_{s_i} \cup C_s| > 0$ and $c \in C_{s_i}$ (students who have taken some of the same courses as $s$ as well as course $c$).  Then $u$'s grade in $c$ can be estimated as a weighted average of the grades $g_{s_i}$.  
 
 To determine the relative weights of users, we used cosine similarity and Pearson's correlation as the primary two measures.  Other measures of similarity such as Kendall, Spearman, and adjusted cosine similarity have been explored in~\cite{herlocker} and~\cite{yu}, but they tend to perform similarly or worse.  We expect our choice of similarity will have little impact on the predicted grades.
 
-For two student (sparse) vectors $S_a$ and $S_b$ with each element corresponding to the student's grade in a course, the similarity is computed using:
+For two student (sparse) vectors $S_a$ and $S_b$ with each element corresponding to the student's grade in a course, we compute the similarity using:
 
 \begin{center}
 \begin{tabular}{cc}
@@ -14,8 +14,5 @@ $\textrm{Pearson's} = \frac{\textrm{cov}(S_a, S_b)}{\sigma_{S_a}\sigma_{S_b}} = 
 \end{tabular}
 \end{center}
 
-Grade predictions for CF follow the multiclass SVM model with 1: A+, 2: A, 3: A-, $\ldots$, 13: F.
+Grade predictions for CF follow the multiclass SVM model with 1: A+, 2: A, 3: A-, $\ldots$, 13: F.  Other implementation details follow the formulas and algorithms outlined by~\cite{breese} and~\cite{cftoolkit}.
 
-For CF, data was initially filtered to remove all courses with fewer than 3 grades and all students with fewer than 4 courses.  This resulted in 5930 students and 3603 courses.  For testing the whole dataset, we separated $10\%$ of the students to test with 3 courses in their transcript removed.  Each student was compared with the other 5337 students to compute the $n$ most similar students.  We tried various values of $n$ from all students to $5$.  $n=10$ produced the lowest MAE, but the variation in MAE was less than 0.2, meaning the choice of $n$ had very little impact on the final predictions.  We also tried removing the influence of negatively correlated students as both Herlocker and Yao indicate that this improves error.  This further reduces the MAE, but again, not enough to significantly change predicted grades.  
-
-For comparison with support vector machines, we ran tests on three random courses to compute the MAE for just those courses.  Here, for the chosen course $c$, we consider all students $S$ with $c \in C_{S_i} \all{i}$.  We compare each student $S_i$ with students $S_j, j \neq i$ by computing the similarity $\textrm{sim}(C_{S_J}, C_{S_I} \\ c)$ and then using the weighted average as before to estimate $S_i$'s grade in $c$.  We used courses with over 50 students to run these tests.  The MAE for these tests did not differ significantly from the average student estimate.
