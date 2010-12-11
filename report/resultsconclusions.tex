@@ -43,12 +43,12 @@ Mean course grade &1.45 &57.0\% \\
 
 We evaluated the contribution of each set of features by training the A vs. non-A SVM exclusively on each set  and comparing the 10-fold cross-validation accuracies against the baseline statistical accuracy.
 
-Overall, the top four features in order were previous course history, recent grades by department, student’s major, and concurrent courses. Weekly workload did not contribute to the accuracy of any of the selected courses, and the number of taken courses only influenced accuracy in CS161 out of the 17 courses tested.
+Overall, the top four features in order were previous course history, recent grades by department, student's major, and concurrent courses. Weekly workload did not contribute to the accuracy of any of the selected courses, and the number of taken courses only influenced accuracy in CS161 out of the 17 courses tested.
 
-However, across different courses, the features that most influenced prediction accuracy varied. For example, in CS161, all of the features except for weekly workload contributed to the prediction rate, and the student’s previous course grades were the most significant predictor. On the other hand, in ARTSTUDI60, the student’s major was the most significant predictor. In CHEM31A, none of the features contributed to the accuracy, suggesting that different factors may better characterize course grades in this case.
+However, across different courses, the features that most influenced prediction accuracy varied. For example, in CS161, all of the features except for weekly workload contributed to the prediction rate, and the student's previous course grades were the most significant predictor. On the other hand, in ARTSTUDI60, the student's major was the most significant predictor. In CHEM31A, none of the features contributed to the accuracy, suggesting that different factors may better characterize course grades in this case.
 
 \begin{table}[t]\scriptsize
-\caption{Percent accuracy increases for A vs. non-A SVM when including only one of the feature types. The largest contributer for each course is highlighted.}
+\caption{Percent accuracy increases for A vs. non-A SVM when including only one of the feature types. The largest contributor for each course is highlighted.}
 \label{svm-features-table}
 \begin{center}
 \begin{tabular}{lrrrrrr}
@@ -81,17 +81,18 @@ Average &2.29&	1.30&	3.20&	1.62&	0.00&	0.66\\
 \subsection{Collaborative Filtering results}
 
 \begin{table}[t]\scriptsize
-\caption{Percent accuracy increases for A vs. non-A SVM when including only one of the feature types. The largest contributer for each course is highlighted.}
 \label{cf-mae-table}
 \begin{center}
 
-\begin{tabular}{lrrr}
+\begin{tabular}{lrrrr}
     
-    \multicolumn{1}{c}{\bf cosine sim}  &\multicolumn{1}{c}{\bf pearson's corr} &\multicolumn{1}{c}{\bf student average} &\multicolumn{1}{c}{\bf course average}
+    &\multicolumn{1}{c}{\bf cosine sim}  &\multicolumn{1}{c}{\bf pearson's corr} &\multicolumn{1}{c}{\bf student's gpa} &\multicolumn{1}{c}{\bf mean course grade}
     \\ \hline \\
-    1.3896    &1.3704    &1.4231    &3.2140 \\
-    3.9439    &3.7505    &4.0451   &14.4421
+    MAE & 1.3896    &1.3704    &1.4231    &3.2140 \\
+    $L_2$ error & 3.9439    &3.7505    &4.0451   &14.4421
 \end{tabular}
+\caption{MAE and $L_2$ error for estimates using collaborative filtering averaged over 25 test runs.  Each test estimated approximately 1,500 grades using 10,453 known course grades to compute the similarities using a base corpus of 5337 students.  Notice that }
+
 \end{center}
 \end{table}
 
