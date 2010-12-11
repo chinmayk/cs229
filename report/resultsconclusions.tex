@@ -10,7 +10,6 @@ We trained A vs. non-A and multi-class SVMs for each of 17 courses that had at l
 On average, both types of SVMs outperformed the mean course grade baseline and are comparable to the student's GPA baseline. Overall, the multi-class SVM correctly predicts a slightly greater percentage of students within a half letter grade when compared to the baselines.
 
 \begin{table}[htbp]\scriptsize
-\caption{Average accuracy for the A vs. non-A SVMs compared to the baselines (higher is better)}
 \label{svm-accuracy-table}
 \begin{center}
 \begin{tabular}{lr}
@@ -20,12 +19,12 @@ A vs. non-A SVM &64.2\% \\
 Student's GPA   &66.4\% \\
 Mean course grade &60.6\% \\
 \end{tabular}
+\caption{Average accuracy for the A vs. non-A SVMs compared to the baselines (higher is better)}
 \end{center}
 \end{table}
 
 
 \begin{table}[htbp]\scriptsize
-\caption{Comparing the multi-class SVMs compared to the baselines. An error of 1 corresponds to a half letter grade error, while an error of 2 corresponds to a full letter grade error.}
 \label{svm-mae-table}
 \begin{center}
 \begin{tabular}{lrr}
@@ -35,6 +34,7 @@ Multi-class SVM &1.38 & 65.2\%\\
 Student's GPA   &1.37 & 61.1\%\\
 Mean course grade &1.45 &57.0\% \\
 \end{tabular}
+\caption{Comparing the multi-class SVMs compared to the baselines. An error of 1 corresponds to a half letter grade error, while an error of 2 corresponds to a full letter grade error.}
 \end{center}
 \end{table}
 
@@ -48,7 +48,6 @@ Overall, the top four features in order were previous course history, recent gra
 However, across different courses, the features that most influenced prediction accuracy varied. For example, in CS161, all of the features except for weekly workload contributed to the prediction rate, and the student's previous course grades were the most significant predictor. On the other hand, in ARTSTUDI60, the student's major was the most significant predictor. In CHEM31A, none of the features contributed to the accuracy, suggesting that different factors may better characterize course grades in this case.
 
 \begin{table}[htbp]\scriptsize
-\caption{Percent accuracy increases for A vs. non-A SVM when including only one of the feature types. The largest contributor for each course is highlighted.}
 \label{svm-features-table}
 \begin{center}
 \begin{tabular}{lrrrrrr}
@@ -75,10 +74,19 @@ POLISCI1&	0.34&	1.02&\cellcolor[gray]{0.8}	3.07&	2.39&	0&	0\\
 Average &2.29&	1.30&	3.20&	1.62&	0.00&	0.66\\
 
 \end{tabular}
+\caption{Percent accuracy increases for A vs. non-A SVM when including only one of the feature types. The largest contributor for each course is highlighted.}
 \end{center}
 \end{table}
 
 \subsection{Collaborative Filtering results}
+
+For CF, we filtered data to remove all courses with fewer than 3 grades and all students with fewer than 4 courses, resulting in 5,930 students and 3,603 courses.  We tested against the entire dataset and specific classes.  For the entire dataset, $10\%$ of the students were randomly separated with 3 courses per student removed.  Each student was compared with the remaining $90\%$ (5337) to compute the top-$n$ most similar students. The results are shown in Table~\ref{cf-mae-table}.
+
+The primary reason the estimates from CF are not much better than the estimate based on students' GPAs is that the dataset is too sparse to find similar users.  Upon analysis of similar users, we find that the similarity coefficients are very small ($O(10^-3)$).  We further validate this by noting that analysis shows the error of the student GPA estimates and the CF estimates are highly correlated.  Because the similarity coefficients determine the deviation of the estimate from the average, the CF estimates generated with small similarity coefficients are very similar to the student GPA estimates.
+
+Recognizing that this user-based CF approach requires more data to be effective, we experimented with tuning various CF parameters in a non-rigorous manner with minor reductions in the MAE ($O(0.1)$).  We tried various values of $n$ from all students to $5$ at logarithmic intervals and found that smaller $n$ tended to reduce the MAE.  We also looked at the similarity coefficients: as defined in~\cite{breese}, the similarities are normalized before computing the weighted average.  By increasing the normalization coefficients, we further reduced the MAE.  We hypothesize that increasing the weights favors outliers and skews the estimate away from the average.  We also tried removing the influence of negatively correlated students as both Herlocker and Yao indicate that this improves error.  Though all these adjustments reduced the MAE, none significantly improved the estimates. 
+
+For comparison with support vector machines, we ran tests on three random courses to compute the MAE for just those courses.  Here, for the chosen course $c$, we consider all students $S$ with $c \in C_{S_i} \forall{i}$.  We compare each student $S_i$ with students $S_j, j \neq i$ by computing the similarity $\textrm{sim}(C_{S_J}, C_{S_I} \\ c)$ and then using the weighted average as before to estimate $S_i$'s grade in $c$.  We used courses with over 50 students to run these tests.  The MAE for these tests did not differ significantly from the average student estimates.
 
 \begin{table}[htbp]\scriptsize
 \label{cf-mae-table}
@@ -91,7 +99,7 @@ Average &2.29&	1.30&	3.20&	1.62&	0.00&	0.66\\
     MAE & 1.3896    &1.3704    &1.4231    &3.2140 \\
     $L_2$ error & 3.9439    &3.7505    &4.0451   &14.4421
 \end{tabular}
-\caption{MAE and $L_2$ error for estimates using collaborative filtering averaged over 25 test runs.  Each test estimated approximately 1,500 grades using 10,453 known course grades to compute the similarities using a base corpus of 5337 students.  Notice that }
+\caption{MAE and $L_2$ error for estimates using collaborative filtering averaged over 25 test runs.  Each test estimated approximately 1,500 grades using 10,453 known course grades to compute the similarities using a base corpus of 5337 students.}
 
 \end{center}
 \end{table}
@@ -102,4 +110,8 @@ Past course history can only go so far in predicting future course grades. A sig
 
 It is also possible that the unexpected occurrences throughout the quarter may have greater influence on grades. For example, a student may just not have studied enough for a final exam, which heavily influences his or her grade. Individual personality factors may also play a part, where doing poorly on a similar course in the past may drive some students to work harder on a similar course in the future.
 
-For collaborative filtering, we could broaden our hypothesis and, for a student $s$ and course $c$, try try to find students that have not only taken the same courses as $s$ an also taken $c$, but who have taken similar courses to both $c$ and courses similar to those taken by $s$.  This can help overcome issues with sparse datasets, which may be the case here considering the high correlation between the MAE of the collaborative filtering and student average baseline estimates.  Some work at combining user-based and item-based collaborative filtering to overcome sparseness has been investigated in \cite{fusion}.
+Improving the collaborative filtering results would most likely require additional data from the CourseRank system.  We would hope to find more similarities between students on which to base our estimations.  This may not be possible: though more grades will be added to the system each year, the relevancy of the older grades will diminish.
+
+An alternative approach to address data sparsity might be to broaden our initial hypothesis.  We could broaden our hypothesis that similar students will perform similarly in courses.  Instead, given a student $s$ and course $c$, we could try to find students that have not only taken the same courses as $s$ an also taken $c$, but who have taken similar courses to both $c$ and courses similar to those taken by $s$.  Jun Wang, et. all have demonstrated a method similar to this that combines user-based and item-based collaborative filtering to overcome sparseness \cite{fusion}.  
+
+Finally, it is possible that we see poor performance because the underlying assumption that similar students in courses from some set $C_a$ will receive similar grades in some other set $C_b$ may be false.  Factors such as concurrent course workload, interest in course, different professors, and others may instead be responsible for deviations in expected course grades.  Some of these external factors may be irrelevant as our analysis of SVMs indicates, but others may require collection of additional data before we can significantly improve course grade estimates.
